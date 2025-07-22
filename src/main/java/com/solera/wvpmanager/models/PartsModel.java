@@ -42,6 +42,12 @@ public class PartsModel {
     @JsonIgnore
     private List<Vp> vehicles;
 
+    public PartsModel(String parts_name, Integer part_num, String brand_part) {
+        this.parts_name = parts_name;
+        this.part_num = part_num;
+        this.brand_part = brand_part;
+    }
+
 
 
 }
