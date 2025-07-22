@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -44,10 +43,12 @@ public class PartsControlLer {
 
     //Get a part by ID
     @GetMapping("/{id}")
-    public ResponseEntity<PartsModel> getPartByID(@RequestParam int id) {
+    public ResponseEntity<PartsModel> getPartByID(@PathVariable int id) {
         PartsModel part = partsService.getPartByID(id);
         return new ResponseEntity<>(part, HttpStatus.OK);
     }
+
+    
 
     //Update a part by ID
     @PutMapping("/{id}")
@@ -59,9 +60,9 @@ public class PartsControlLer {
     //Delete a part by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePartByID(@PathVariable int id) {
-        partsService.deletePartById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+    partsService.deletePartById(id);
+    return ResponseEntity.noContent().build();
     }
+
 
 }

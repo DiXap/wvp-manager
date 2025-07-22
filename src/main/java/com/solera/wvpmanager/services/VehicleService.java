@@ -68,7 +68,7 @@ public class VehicleService {
     }
 
     /* Update */
-    public VehicleModel updateVehicle(VehicleModel upVehicle) throws IllegalArgumentException {
+    public VehicleModel updateVehicle(Integer id, VehicleModel upVehicle) throws IllegalArgumentException {
         if(upVehicle == null){
             throw new IllegalArgumentException("Vehicle cannot be null");
         }
@@ -88,9 +88,7 @@ public class VehicleService {
             throw new IllegalArgumentException("Invalid vehicle ID: " + id);
         }
 
-        if(!vehicleRepository.existsById(id)){
-            throw new IllegalArgumentException("Vehicle does not exist with ID: " + id);
-        }
+        
         vehicleRepository.deleteById(id);
 
     }

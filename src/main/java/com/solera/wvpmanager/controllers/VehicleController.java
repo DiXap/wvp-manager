@@ -1,5 +1,6 @@
 package com.solera.wvpmanager.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.solera.wvpmanager.models.VehicleModel;
 import com.solera.wvpmanager.models.Vp;
@@ -56,14 +57,16 @@ public class VehicleController {
     }
 
     //Update a vehicle
-    @PutMapping
-    public ResponseEntity<VehicleModel> updateVehicle(@RequestBody VehicleModel upVehicle) {
-        VehicleModel updatedVehicle = vehicleService.updateVehicle(upVehicle);
+    @PutMapping("/{id}")
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<VehicleModel> updateVehicle(@PathVariable Integer id, @RequestBody VehicleModel upVehicle) {
+        VehicleModel updatedVehicle = vehicleService.updateVehicle(id, upVehicle);
         return updatedVehicle != null ? ResponseEntity.ok(updatedVehicle) : ResponseEntity.notFound().build();
     }
 
     //Assign a workshop to a vehicle
     @PutMapping("/{vehicleId}/toworkshop/{workshopId}")
+    
     public ResponseEntity<VehicleModel> assignVehicleToWorkshop(@PathVariable Integer vehicleId, @PathVariable Integer workshopId) {
         VehicleModel updatedVehicle = vehicleService.assignWorkshopToVehicle(vehicleId, workshopId);
         return ResponseEntity.ok(updatedVehicle);
