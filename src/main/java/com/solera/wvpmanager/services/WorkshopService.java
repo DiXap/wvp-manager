@@ -47,7 +47,6 @@ public class WorkshopService {
 
     /* Update */
     public WorkshopModel updateWorkshop(int workshopId, WorkshopModel workshop) throws IllegalArgumentException {
-        // TODO. Update specified fields insted of the whole object and setting null values
         if(workshop == null)
             throw new IllegalArgumentException("Workshop cannot be null");
 
