@@ -49,9 +49,10 @@ public class WorkshopController {
     }
 
     /* Update */
-    @PutMapping
-    public ResponseEntity<WorkshopModel> updateWorkshop(@RequestBody WorkshopModel workshop) {
-        WorkshopModel updatedWorkshop = workshopService.updateWorkshop(workshop);
+    @PutMapping("/{workshopId}")
+    public ResponseEntity<WorkshopModel> updateWorkshop(@PathVariable int workshopId, @RequestBody WorkshopModel workshop) {
+        // Consider DTO instead of Model
+        WorkshopModel updatedWorkshop = workshopService.updateWorkshop(workshopId, workshop);
 
         return ResponseEntity.ok(updatedWorkshop);
     }

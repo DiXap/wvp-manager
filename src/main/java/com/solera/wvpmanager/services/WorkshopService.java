@@ -46,15 +46,22 @@ public class WorkshopService {
 
 
     /* Update */
-    public WorkshopModel updateWorkshop(WorkshopModel workshop) throws IllegalArgumentException {
-        // TODO. Update specified fields insted of the whole object and setting null values
+    public WorkshopModel updateWorkshop(int workshopId, WorkshopModel workshop) throws IllegalArgumentException {
         if(workshop == null)
             throw new IllegalArgumentException("Workshop cannot be null");
 
-        if(!workshopRepository.existsById(workshop.getId()))
+        WorkshopModel currentWorkshop = this.getWorkShopById(workshopId); // Returns null if not found. Could throw if illegal id
+
+        if(currentWorkshop == null)
             throw new IllegalArgumentException("Workshop does not exists");
 
-        return workshopRepository.save(workshop);
+        if (workshop.getName() != null)
+            currentWorkshop.setName(workshop.getName());
+        
+        if (workshop.getEmail() != null)
+            currentWorkshop.setEmail(workshop.getEmail());
+
+        return workshopRepository.save(currentWorkshop);
     }
 
 
@@ -65,6 +72,9 @@ public class WorkshopService {
 
         if (!workshopRepository.existsById(workshopId))
             throw new IllegalArgumentException("Workshop does not exists");
+
+        if(!this.getWorkShopById(workshopId).getVehicles().isEmpty())
+            throw new IllegalArgumentException("Cannot delete a workshop with vehicles assigned");
 
         workshopRepository.deleteById(workshopId);
     }
