@@ -1,6 +1,5 @@
 package com.solera.wvpmanager.models;
 import java.util.List;
-import java.util.Locale.Category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,6 +13,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/*This class represents the entity of parts in database
+ * With lombok annotations we can avoid boilerplate code like getters, setters, constructors, etc.
+ * The id_part is the primary key of the entity and is auto-generated
+ * We use @OneToMany to establish a relationship with the VehicleModel class trough the Vp class 
+ * Vp class is a join table that connects PartsModel and VehicleModel
+*/
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,10 +29,10 @@ public class PartsModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_part;
+    private Integer id_part;
 
     private String parts_name;
-    private int part_num;
+    private Integer part_num;
     private String brand_part;
 
     
