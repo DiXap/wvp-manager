@@ -1,15 +1,20 @@
 package com.solera.wvpmanager.services;
 import java.util.List;
+import com.solera.wvpmanager.repositories.WorkshopRepository;
 import org.springframework.stereotype.Service;
 import com.solera.wvpmanager.models.VehicleModel;
 import com.solera.wvpmanager.models.Vp;
 import com.solera.wvpmanager.repositories.VehicleRepository;
 
+
 @Service
 public class VehicleService {
+
+    private final WorkshopRepository workshopRepository;
     private final VehicleRepository vehicleRepository;
-    public VehicleService(VehicleRepository vehicleRepository) {
+    public VehicleService(VehicleRepository vehicleRepository, WorkshopRepository workshopRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.workshopRepository = workshopRepository;
     }
 
     /* Create */
@@ -40,6 +45,19 @@ public class VehicleService {
             throw new IllegalArgumentException("No vehicles found");
         }
         return vehicleRepository.findAll();
+    }
+
+    //Asign a workshop to a vehicle
+    public VehicleModel assignWorkshopToVehicle(Integer vehicleId, Integer workshopId) throws IllegalArgumentException {
+         if (vehicleId == null || vehicleId <= 0 || !vehicleRepository.existsById(vehicleId)) {
+        throw new IllegalArgumentException("Invalid vehicle ID: " + vehicleId);
+        }
+        if (workshopId == null || workshopId <= 0 || !workshopRepository.existsById(workshopId)) {
+        throw new IllegalArgumentException("Invalid workshop ID: " + workshopId);
+        }
+        VehicleModel vehicle = vehicleRepository.findById(vehicleId).get();
+        vehicle.setWorkshop(workshopRepository.findById(workshopId).get());
+        return vehicleRepository.save(vehicle);
     }
 
     //Get parts in a vehicle
