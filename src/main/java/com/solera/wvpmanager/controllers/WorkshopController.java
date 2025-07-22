@@ -3,6 +3,7 @@ package com.solera.wvpmanager.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.solera.wvpmanager.models.VehicleModel;
 import com.solera.wvpmanager.models.WorkshopModel;
 import com.solera.wvpmanager.services.WorkshopService;
 
@@ -64,4 +65,10 @@ public class WorkshopController {
     }
 
     /* Vehicle related ops */
+    @GetMapping("/{workshopId}/vehicles")
+    public ResponseEntity<List<VehicleModel>> getWorkshopVehicles(@PathVariable int workshopId) {
+        List<VehicleModel> vehicles = workshopService.getWorkshopVehicles(workshopId);
+
+        return ResponseEntity.ok(vehicles);
+    }
 }
