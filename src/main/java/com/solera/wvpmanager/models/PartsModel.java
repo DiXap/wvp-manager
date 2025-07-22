@@ -1,6 +1,5 @@
 package com.solera.wvpmanager.models;
 import java.util.List;
-import java.util.Locale.Category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
