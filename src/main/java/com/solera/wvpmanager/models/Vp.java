@@ -1,6 +1,5 @@
 package com.solera.wvpmanager.models;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,6 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+/* This class represents the join table between parts and vehicles 
+ * It contains the IDs of both parts and vehicles, allowing us to associate them.
+*/
 
 @AllArgsConstructor
 @NoArgsConstructor
