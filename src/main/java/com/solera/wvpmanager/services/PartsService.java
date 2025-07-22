@@ -33,7 +33,7 @@ public class PartsService{
 
     //Read one part by ID
     public PartsModel getPartByID(int id) throws IllegalArgumentException {
-        if(!partsRepository.existsById(id)){
+        if(!partsRepository.existsById(id) || id <= 0) {
             throw new IllegalArgumentException("Part with ID " + id + " not found.");
         }
         return partsRepository.findById(id).orElse(null);
@@ -47,7 +47,7 @@ public class PartsService{
             prevPart.setPart_num(updatedPart.getPart_num());
             prevPart.setBrand_part(updatedPart.getBrand_part());
             partsRepository.save(prevPart);
-        }  
+        }
         return prevPart;
     }
 

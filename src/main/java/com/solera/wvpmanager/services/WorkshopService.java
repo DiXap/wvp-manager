@@ -25,7 +25,7 @@ public class WorkshopService {
         if (workshop.getName() == null || workshop.getName().isEmpty())
             throw new IllegalArgumentException("Invalid workshop name");
 
-        if (workshop.getEmail() == null || workshop.getEmail().isEmpty())
+        if (workshop.getEmail() == null || workshop.getEmail().isEmpty() || !workshop.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
             throw new IllegalArgumentException("Invalid workshop email");
 
         return workshopRepository.save(workshop);

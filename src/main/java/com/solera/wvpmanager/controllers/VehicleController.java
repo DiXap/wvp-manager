@@ -62,6 +62,13 @@ public class VehicleController {
         return updatedVehicle != null ? ResponseEntity.ok(updatedVehicle) : ResponseEntity.notFound().build();
     }
 
+    //Assign a workshop to a vehicle
+    @PutMapping("/{vehicleId}/toworkshop/{workshopId}")
+    public ResponseEntity<VehicleModel> assignVehicleToWorkshop(@PathVariable Integer vehicleId, @PathVariable Integer workshopId) {
+        VehicleModel updatedVehicle = vehicleService.assignWorkshopToVehicle(vehicleId, workshopId);
+        return ResponseEntity.ok(updatedVehicle);
+    }
+
     //Delete a vehicle by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteVehicleById(@PathVariable Integer id) {

@@ -46,9 +46,6 @@ public class PartsControlLer {
     @GetMapping("/{id}")
     public ResponseEntity<PartsModel> getPartByID(@RequestParam int id) {
         PartsModel part = partsService.getPartByID(id);
-        if (part == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(part, HttpStatus.OK);
     }
 
@@ -56,9 +53,6 @@ public class PartsControlLer {
     @PutMapping("/{id}")
     public ResponseEntity<PartsModel> updatePart(@PathVariable Integer id, @RequestBody PartsModel updatedPart) {
         PartsModel part = partsService.updatePart(id, updatedPart);
-        if (part == null || part.getId_part() == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(part, HttpStatus.OK);
     }
 
