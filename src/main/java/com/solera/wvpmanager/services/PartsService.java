@@ -1,7 +1,11 @@
 package com.solera.wvpmanager.services;
+import org.springframework.stereotype.Service;
+
 import com.solera.wvpmanager.models.PartsModel;
 import com.solera.wvpmanager.repositories.PartsRepository;
 
+
+@Service
 public class PartsService{
     private final PartsRepository partsRepository;
 
@@ -11,12 +15,12 @@ public class PartsService{
     }
 
     //Create a new part
-    public void createPart(PartsModel part) throws IllegalArgumentException{
+    public PartsModel createPart(PartsModel part) throws IllegalArgumentException{
 
         if(part.getParts_name()==null || part.getBrand_part()==null || part.getPart_num() == null){
             throw new IllegalArgumentException("Part name cannot be empty");
         }
-        partsRepository.save(part);
+        return partsRepository.save(part);
     }
 
     //Read all parts
@@ -36,7 +40,7 @@ public class PartsService{
     }
 
     //Update a part
-    public void updatePart(int id, PartsModel updatedPart){
+    public PartsModel updatePart(int id, PartsModel updatedPart){
         PartsModel prevPart = getPartByID(id);
         if (prevPart != null) {
             prevPart.setParts_name(updatedPart.getParts_name());
@@ -44,14 +48,19 @@ public class PartsService{
             prevPart.setBrand_part(updatedPart.getBrand_part());
             partsRepository.save(prevPart);
         }  
+        return prevPart;
     }
 
     //Delete a part
-    public void deletePart(int id){
-        if(getPartByID(id) == null){
-            throw new IllegalArgumentException("Part with ID " + id + " not found.");
+    public void deletePartById(int PartId) throws IllegalArgumentException {
+       if(PartId <= 0) {
+            throw new IllegalArgumentException("Invalid part ID: " + PartId);
         }
-            partsRepository.deleteById(id);
+        if(!partsRepository.existsById(PartId)) {
+            throw new IllegalArgumentException("Part with ID " + PartId + " does not exist.");
+        }
+        partsRepository.deleteById(PartId);
+
     }
 
     
