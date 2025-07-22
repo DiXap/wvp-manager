@@ -52,14 +52,18 @@ public class PartsService{
     }
 
     //Delete a part
-    public void deletePartById(int PartId) throws IllegalArgumentException {
-       if(PartId <= 0) {
-            throw new IllegalArgumentException("Invalid part ID: " + PartId);
+    public void deletePartById(int partId) throws IllegalArgumentException {
+       if(partId <= 0) {
+            throw new IllegalArgumentException("Invalid part ID: " + partId);
         }
-        if(!partsRepository.existsById(PartId)) {
-            throw new IllegalArgumentException("Part with ID " + PartId + " does not exist.");
+        if(!partsRepository.existsById(partId)) {
+            throw new IllegalArgumentException("Part with ID " + partId + " does not exist.");
         }
-        partsRepository.deleteById(PartId);
+
+        if(!this.getPartByID(partId).getVehicles().isEmpty())
+            throw new IllegalArgumentException("Cannot delete a part assigned to a vehicle");
+
+        partsRepository.deleteById(partId);
 
     }
 

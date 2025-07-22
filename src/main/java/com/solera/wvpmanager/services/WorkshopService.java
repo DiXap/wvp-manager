@@ -66,6 +66,9 @@ public class WorkshopService {
         if (!workshopRepository.existsById(workshopId))
             throw new IllegalArgumentException("Workshop does not exists");
 
+        if(!this.getWorkShopById(workshopId).getVehicles().isEmpty())
+            throw new IllegalArgumentException("Cannot delete a workshop with vehicles assigned");
+
         workshopRepository.deleteById(workshopId);
     }
 
