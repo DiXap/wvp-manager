@@ -1,8 +1,8 @@
 package com.solera.wvpmanager.services;
-
+import java.util.List;
 import org.springframework.stereotype.Service;
-
 import com.solera.wvpmanager.models.VehicleModel;
+import com.solera.wvpmanager.models.Vp;
 import com.solera.wvpmanager.repositories.VehicleRepository;
 
 @Service
@@ -17,8 +17,8 @@ public class VehicleService {
         if(newVehicle == null){
             throw new IllegalArgumentException("Vehicle cannot be null");
         }
-        if(newVehicle.getVin() == null || newVehicle.getVin().isEmpty()){
-            throw new IllegalArgumentException("Vehicle VIN cannot be null or empty");
+        if(newVehicle.getVin() == null || newVehicle.getVin().isEmpty() || newVehicle.getVin().length()!= 17){
+            throw new IllegalArgumentException("Invalid vehicle model or VIN: " + newVehicle);
         }
         if(newVehicle.getModel() == null || newVehicle.getModel().isEmpty()){
             throw new IllegalArgumentException("Vehicle model cannot be null or empty");
@@ -34,6 +34,21 @@ public class VehicleService {
         return vehicleRepository.findById(id).orElse(null);
     }
 
+    /* Read all vehicles */
+    public Iterable<VehicleModel> getAllVehicles() {
+        if(vehicleRepository.count() == 0){
+            throw new IllegalArgumentException("No vehicles found");
+        }
+        return vehicleRepository.findAll();
+    }
+
+    //Get parts in a vehicle
+    public List<Vp> getPartsInVehicle(Integer id) throws IllegalArgumentException {
+        VehicleModel vehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found with ID: " + id));
+        return vehicle.getParts();
+    }
+
     /* Update */
     public VehicleModel updateVehicle(VehicleModel upVehicle) throws IllegalArgumentException {
         if(upVehicle == null){
@@ -41,6 +56,9 @@ public class VehicleService {
         }
         if(!vehicleRepository.existsById(upVehicle.getId())){
             throw new IllegalArgumentException("Vehicle does not exist with ID: " + upVehicle.getId());
+        }
+        if(!upVehicle.getVin().isEmpty()){
+            throw new IllegalArgumentException("Vehicle VIN cannot be changed");
         }
         return vehicleRepository.save(upVehicle);
 
