@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.solera.wvpmanager.models.VehicleModel;
 import com.solera.wvpmanager.models.WorkshopModel;
 import com.solera.wvpmanager.repositories.WorkshopRepository;
 
@@ -70,4 +71,10 @@ public class WorkshopService {
 
 
     /* Vehicle related ops */
+    public List<VehicleModel> getWorkshopVehicles(int workshopId) throws IllegalArgumentException {
+        if (workshopId <= 0)
+            throw new IllegalArgumentException("Invalid workshop Id: " + workshopId);
+
+        return workshopRepository.findById(workshopId).map(WorkshopModel::getVehicles).orElse(null);
+    }
 }
